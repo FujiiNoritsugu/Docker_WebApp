@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>演習用のHTML</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='test_css.css')}}">
+        <style type="text/css">
+            .test_class {color:blue}
+            td.test_class {color:magenta}
+        </style>
+    </head>
+    <body>
+        テーブル<br>
+        <table id="test_id">
+            <tr class="test_class">
+            <th style="color:red;">見出し1</th>
+            <th>見出し2</th>
+            <th>見出し3</th>
+            </tr>
+            <tr>
+            <td>内容1</td>
+            <td class="test_class">内容2</td>
+            <td>内容3</td>
+        </table>            
+        <form method="POST" action="http://127.0.0.1:5000/show_data">
+            <input type="text" name="text" value="テキスト"><br>
+            <input type="button" name="button" value="ボタン"><br>
+            <input type="checkbox" name="check" value="チェックボックス1">チェックボックス1
+            <input type="checkbox" name="check" value="チェックボックス2">チェックボックス2<br>
+            <input type="radio" name="radio" value="ラジオボタン1">ラジオボタン1
+            <input type="radio" name="radio" value="ラジオボタン2">ラジオボタン2<br>
+            <select name="select">
+                <option name="option1">選択１</option>
+                <option name="option2">選択２</option>
+                <option name="option3">選択３</option>
+            </select>                            
+            <input type="submit" name"="submit" value="送信">
+        </form>
+        <a href="https://www.google.co.jp">グーグルへのリンク</a>       
+    </body>
+</html>
