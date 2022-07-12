@@ -1,10 +1,13 @@
 from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from mysql_model import Person
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:p%40ssw0rd1@mysqldb/test_mysql?charset=utf8mb4'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['PORT'] = os.getenv('DEBUG_PORT') if os.getenv('VS_DEBUG') == '1' else os.getenv('DEFAULT_PORT')
+
 db = SQLAlchemy(app)
 
 
@@ -59,6 +62,8 @@ def person_result():
 
 @app.route('/try_html')
 def try_html():
+    port = os.getenv('DEBUG_PORT', 5000)
+    print(port)
     return render_template('./try_html.html')
 
 

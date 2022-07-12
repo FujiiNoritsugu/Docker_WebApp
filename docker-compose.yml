@@ -8,6 +8,8 @@ services:
   - 5000:5000
   volumes:
   - ./app:/app
+  env_file:
+  - ./.env.dev
 
  mysqldb:
   image: mysql

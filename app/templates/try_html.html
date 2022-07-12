@@ -36,8 +36,8 @@
             <td>内容1</td>
             <td>内容2</td>
             <td>内容3</td>
-        </table>            
-        <form method="POST" action="http://127.0.0.1:5000/show_data">
+        </table>
+        <form method="POST" action="http://127.0.0.1:{{config.PORT}}/show_data">
             <input type="text" name="text" value="テキスト"><br>
             <input type="button" name="button" value="ボタン" onclick="change_table();"><br>
             <input type="checkbox" name="check" value="チェックボックス1">チェックボックス1
