@@ -5,7 +5,7 @@ services:
   build:
    context: .
    dockerfile: Dockerfile.prod
-  command: sh -c 'gunicorn --bind 0.0.0.0:5000 manage:app'
+  command: sh -c 'gunicorn --bind 0.0.0.0:5000 app:app'
   ports:
   - 80:5000
   env_file:
