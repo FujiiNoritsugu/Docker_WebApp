@@ -4,9 +4,9 @@ from mysql_model import Person
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:p%40ssw0rd1@mysqldb/test_mysql?charset=utf8mb4'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['PORT'] = os.getenv('DEBUG_PORT') if os.getenv('VS_DEBUG') == '1' else os.getenv('DEFAULT_PORT')
+app.config['PORT'] = os.getenv('PORT')
 
 db = SQLAlchemy(app)
 
@@ -56,7 +56,7 @@ def person_search():
 @app.route('/person_result')
 def person_result():
     search_size = request.args.get("search_size")
-    persons = db.session.query(Person).filter(Person.size > search_size)
+    persons = db.session.query(Person).filter(Person.size >= search_size)
     return render_template('./person_result.html', persons=persons, search_size=search_size)
 
 
