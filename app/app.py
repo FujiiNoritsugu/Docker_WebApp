@@ -2,15 +2,15 @@ from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-if os.getenv('VS_DEBUG') == '1':
+if os.getenv('DEBUG') == '1':
     from test_model import Person
 else:
     from mysql_model import Person
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLITE_URI') if os.getenv('VS_DEBUG') == '1' else os.getenv('MYSQL_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLITE_URI') if os.getenv('DEBUG') == '1' else os.getenv('MYSQL_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['PORT'] = os.getenv('DEBUG_PORT') if os.getenv('VS_DEBUG') == '1' else os.getenv('DEFAULT_PORT')
+app.config['PORT'] = os.getenv('PORT')
 
 db = SQLAlchemy(app)
 
@@ -66,8 +66,6 @@ def person_result():
 
 @app.route('/try_html')
 def try_html():
-    port = os.getenv('DEBUG_PORT', 5000)
-    print(port)
     return render_template('./try_html.html')
 
 
