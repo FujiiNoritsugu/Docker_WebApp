@@ -2,11 +2,17 @@ from flask import Flask, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from mysql_model import Person
 import os
+import logging
+import traceback
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PORT'] = os.getenv('PORT')
+app.logger.setLevel(logging.DEBUG)
+log_handler = logging.FileHandler(os.getenv('LOG_FILE'))
+log_handler.setLevel(logging.DEBUG)
+app.logger.addHandler(log_handler)
 
 db = SQLAlchemy(app)
 
@@ -55,8 +61,12 @@ def person_search():
 
 @app.route('/person_result')
 def person_result():
-    search_size = request.args.get("search_size")
-    persons = db.session.query(Person).filter(Person.size >= search_size)
+    try:
+        search_size = request.args.get("search_size")
+        app.logger.debug(f'in person_result search_size:{search_size}')
+        persons = db.session.query(Person).filter(Person.size >= search_size)
+    except Exception:
+        app.logger.error(traceback.format_exec())
     return render_template('./person_result.html', persons=persons, search_size=search_size)
 
 
