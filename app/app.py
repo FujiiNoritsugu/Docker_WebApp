@@ -11,8 +11,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PORT'] = os.getenv('PORT')
 app.logger.setLevel(logging.DEBUG)
 log_handler = logging.FileHandler(os.getenv('LOG_FILE'))
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(filename)s - %(name)s - %(funcName)s - %(message)s')
+log_handler.setFormatter(formatter)
 log_handler.setLevel(logging.DEBUG)
 app.logger.addHandler(log_handler)
+log = app.logger
 
 db = SQLAlchemy(app)
 
@@ -63,10 +66,11 @@ def person_search():
 def person_result():
     try:
         search_size = request.args.get("search_size")
-        app.logger.debug(f'in person_result search_size:{search_size}')
+        log.debug(f'search_size:{search_size}')
+        search_size = int(search_size)
         persons = db.session.query(Person).filter(Person.size >= search_size)
     except Exception:
-        app.logger.error(traceback.format_exec())
+        log.error(traceback.format_exec())
     return render_template('./person_result.html', persons=persons, search_size=search_size)
 
 
