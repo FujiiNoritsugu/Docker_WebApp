@@ -10,6 +10,8 @@ services:
   tty: true
   volumes:
   - ./app:/app
+  - ./log:/app/log
+
   env_file:
   - ./.env.dev
 
