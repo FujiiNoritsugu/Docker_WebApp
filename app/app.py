@@ -76,8 +76,6 @@ def person_result():
 
 @app.route('/try_html')
 def try_html():
-    port = os.getenv('DEBUG_PORT', 5000)
-    print(port)
     return render_template('./try_html.html')
 
 
